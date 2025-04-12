@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "expense-tracker-app",
+    "slug": "expense-tracker-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "entryPoint": "App.tsx",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.dineshbali18.expensetrackerapp"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      // "REACT_APP_API": "http://192.168.1.11",
+      "REACT_APP_API": "http://3.148.203.156",
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "b539c10e-7cf8-4e78-8a52-059c5c3ccc9a"
+      }
+    },
+    "owner": "dineshbali18"
+  }
+}

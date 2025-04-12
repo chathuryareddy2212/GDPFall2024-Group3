@@ -1,24 +1,25 @@
 const express = require('express');
 const router = express.Router();
+const verifyToken = require('../jwt/verify');
 
-router.get('/expenses/:userId', (req, res) => {
-    return res.json({ message: "Get all expenses for a user" });
-});
+module.exports = (sequelize) => {
+  const expensesController = require('../controllers/expenseController')(sequelize);
 
-router.get('/expenses/:expenseId', (req, res) => {
-    return res.json({ message: "Get details of a specific expense" });
-});
+  const { 
+    getExpensesForUser,
+    getExpenseById,
+    addExpense,
+    updateExpense,
+    deleteExpense,
+    syncTransactions
+  } = expensesController;
 
-router.post('/expenses', (req, res) => {
-    return res.json({ message: "Add a new expense" });
-});
+  router.get('/expenses/user/:userId', verifyToken, getExpensesForUser);
+  router.get('/expenses/:expenseId', verifyToken, getExpenseById);
+  router.post('/create/expenses', verifyToken, addExpense);
+  router.put('/expenses/:expenseId', verifyToken, updateExpense);
+  router.delete('/expenses/:expenseId', verifyToken, deleteExpense);
+  router.get('/sync-transactions/:userId', verifyToken, syncTransactions);
 
-router.put('/expenses/:expenseId', (req, res) => {
-    return res.json({ message: "Update an expense" });
-});
-
-router.delete('/expenses/:expenseId', (req, res) => {
-    return res.json({ message: "Delete an expense" });
-});
-
-module.exports = router;
+  return router;
+};

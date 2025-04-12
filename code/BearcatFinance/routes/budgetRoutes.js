@@ -1,24 +1,23 @@
 const express = require('express');
 const router = express.Router();
+const verifyToken = require('../jwt/verify');
 
-router.get('/user/:userId/budgets', (req, res) => {
-    return res.json({ message: "Gets budgets for a user" });
-});
+module.exports = (sequelize) => {
+  const budgetsController = require('../controllers/budgetController')(sequelize);
 
-router.get('/budgets/:budgetId', (req, res) => {
-    return res.json({ message: "Gets details of a specific budget" });
-});
+  const {
+    getBudgetsForUser,
+    getBudgetById,
+    createBudget,
+    updateBudget,
+    deleteBudget
+  } = budgetsController;
 
-router.post('/budgets', (req, res) => {
-    return res.json({ message: "Creates a new budget" });
-});
+  router.get('/user/:userId/budgets', verifyToken, getBudgetsForUser);
+  router.get('/budgets/:budgetId', verifyToken, getBudgetById);
+  router.post('/budgets', verifyToken, createBudget);
+  router.put('/budgets/:budgetId', verifyToken, updateBudget);
+  router.delete('/budgets/:budgetId', verifyToken, deleteBudget);
 
-router.put('/budgets/:budgetId', (req, res) => {
-    return res.json({ message: "Updates a budget" });
-});
-
-router.delete('/budgets/:budgetId', (req, res) => {
-    return res.json({ message: "Deletes a budget" });
-});
-
-module.exports = router;
+  return router;
+};
